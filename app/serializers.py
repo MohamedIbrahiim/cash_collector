@@ -23,3 +23,7 @@ class IsFrozenSerializer(serializers.Serializer):
 
 class PaySomeCollectedSerializer(serializers.Serializer):
     collected = serializers.FloatField()
+
+
+class CustomCollectSerializer(serializers.Serializer):
+    collect_date = serializers.DateTimeField()

@@ -64,7 +64,7 @@ class CashCollectorTest(TestCase):
         response = self.client.get(reverse("get-next-tasks"), format="json")
         res_json = response.json()
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(res_json, ["You do not have any tasks"])
+        self.assertEqual(res_json, ["No assigned tasks"])
 
     def test_collect_next_task(self):
         response = self.client.put(reverse("collect-tasks"))
@@ -123,10 +123,10 @@ class CashCollectorTest(TestCase):
             reverse("pay-some"), data={"collected": 100000}, format="json"
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.json(), ["invalid collected amount"])
+        self.assertEqual(response.json(), ["Invalid collected amount"])
 
     def test_pay_some_and_remove_frozen(self):
-        with patch("app.apis.datetime") as mock_datetime:
+        with patch("app.utility.datetime") as mock_datetime:
             mock_datetime.now.return_value = datetime.now() - timedelta(days=2)
             for _ in self.tasks[:5]:
                 self.client.put(reverse("collect-tasks"))
