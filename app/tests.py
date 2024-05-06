@@ -76,6 +76,17 @@ class CashCollectorTest(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(next_task_id, self.tasks[1].id)
 
+    def test_custom_collect_next_task(self):
+        custom_date = datetime.now() - timedelta(days=2)
+        response = self.client.put(reverse("custom-collect-tasks"), data={"collect_date": custom_date})
+        next_task_collected_at = (
+            Task.objects.filter(assigned_to=self.cash_collector_obj, is_collected=True)
+            .last()
+            .collected_at
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(next_task_collected_at, custom_date)
+
     def test_collect_without_next_task(self):
         Task.objects.filter(
             assigned_to=self.cash_collector_obj, is_collected=False

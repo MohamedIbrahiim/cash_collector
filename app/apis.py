@@ -84,7 +84,7 @@ class CustomCollectTask(CollectTask):
 
     def update(self, request, *args, **kwargs):
         data = request.data
-        self.serializer_class(date=data).is_valid(raise_exception=True)
+        self.serializer_class(data=data).is_valid(raise_exception=True)
         collect_next_task(self.get_object(), request.user, data.get("collect_date"))
         return Response(status=status.HTTP_200_OK)
 
