@@ -45,9 +45,12 @@ http://localhost:8000/admin/.
 `make install`: Install dependencies from requirements.txt into the virtual environment.
 `make clean`:  Delete the virtual environment and start fresh.
 
-### Additional Notes
+# Important Note
 
-Environment variables are loaded from a .env file. Ensure this file is present and contains necessary configurations.
+`*` to test the flow use custom api `/api/v1/custom/collect/` to set date based on your need and functions will calculate based on today's date
+ex. if you want to test frozen and your threshold is 2 days add datetime which will point to 2 days ago with early time
+so if today is 2024-05-07 00:06:22.499937 so you can send 2024-05-05 00:06:10.306930 and test if frozen or not
+
 
 #### Project Description (Api):
 
